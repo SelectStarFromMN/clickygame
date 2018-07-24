@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import cards from "./cards.json";
 
 class App extends Component {
+
+  // Setting this.state.cards to the cards json array
+  state = {
+    cards
+  };
+
   render() {
     return (
       <div className="App">
