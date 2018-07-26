@@ -32,15 +32,17 @@ class App extends Component {
     let score = this.state.score;
 
     if (clickedCards.includes(cardId)) {
-      message = "Ooops, you already clicked that one! Click an image to restart!"
+      message = "Ooops, you already clicked that one! Click an image to restart!";
+      clickedCards = [];
       console.log(message);
     } else {
       clickedCards.push(cardId);
       if (clickedCards.length === this.state.cards.length) {
-        message = "You WON! Click an image to restart!"
+        message = "You WON! Click an image to restart!";
+        clickedCards = [];
         console.log(message);
       } else {
-        message = "Nice job, keep going!"
+        message = "Nice job, keep going!";
         console.log(message);
       }
     }
@@ -60,6 +62,7 @@ class App extends Component {
       <div className="App" >
         <Scoreboard
           score={this.state.score}
+          topscore={this.state.topScore}
           message={this.state.message}
         />
         {this.state.cards.map(card => (
