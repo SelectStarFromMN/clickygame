@@ -1,28 +1,56 @@
 import React, { Component } from 'react';
 import './App.css';
 import cards from "./cards.json";
-import Card from "./components/Card/Card";
+import Card from "./components/Card";
+import Scoreboard from './components/Scoreboard';
 
 class App extends Component {
 
-  // Setting this.state.cards to the cards json array
+  // Setting this.state
   state = {
     cards,
-    clickedCardIds: []
+    clickedCardIds: [],
+    message: "Click on an image to earn points, but don't click on any more than once!",
+    score: 0,
+    topScore: 0
   };
 
   // Efficient O(n) Durstenfeld-Shuffle (located on StackExchange)
   shuffleCards = () => {
     console.log("Shuffling....")
-    for (let i = cards.length - 1; i > 0; i--) {
+    for (let i = this.state.cards.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [cards[i], cards[j]] = [cards[j], cards[i]]; // eslint-disable-line no-param-reassign
+      [this.state.cards[i], this.state.cards[j]] = [this.state.cards[j], this.state.cards[i]]; // eslint-disable-line no-param-reassign
     }
   }
 
   cardClickHandler = (cardId) => {
     console.log('Clicked: ' + cardId)
-    this.setState({cards, clickedCardIds: []});
+    let clickedCards = this.state.clickedCardIds;
+    let message = this.state.message;
+    let topScore = this.state.topScore;
+    let score = this.state.score;
+
+    if (clickedCards.includes(cardId)) {
+      message = "Ooops, you already clicked that one! Click an image to restart!"
+      console.log(message);
+    } else {
+      clickedCards.push(cardId);
+      if (clickedCards.length === this.state.cards.length) {
+        message = "You WON! Click an image to restart!"
+        console.log(message);
+      } else {
+        message = "Nice job, keep going!"
+        console.log(message);
+      }
+    }
+
+    score = clickedCards.length;
+    topScore = Math.max(topScore, clickedCards.length)
+    console.log("TopScore: " + topScore)
+
+    // Trigger state change
+    this.setState({cards, clickedCardIds: clickedCards, score: score, topScore: topScore, message: message});
   }
 
   // On App Render, shuffle the cards and display each one
@@ -30,6 +58,10 @@ class App extends Component {
     this.shuffleCards();
     return (
       <div className="App" >
+        <Scoreboard
+          score={this.state.score}
+          message={this.state.message}
+        />
         {this.state.cards.map(card => (
           <Card
             key={card.id}
