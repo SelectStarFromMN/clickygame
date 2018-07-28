@@ -1,5 +1,6 @@
   /* 200x200 TILT */
 .card img {
+    float: left;
     box-shadow: 0 3px 6px #999, 0 3px 6px #999;
     height: 200px;
     width: 200px;
@@ -10,6 +11,7 @@
             transition: all 0.5s ease;
   }
   .card img:hover {
+    cursor: pointer;
     -webkit-transform: rotate(-10deg);
        -moz-transform: rotate(-10deg);
          -o-transform: rotate(-10deg);
@@ -17,4 +19,6 @@
             transform: rotate(-10deg);
   }
   
-  
+  img {
+      margin: 5px;
+  }

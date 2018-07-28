@@ -10,7 +10,7 @@ class App extends Component {
   state = {
     cards,
     clickedCardIds: [],
-    message: "Click on an image to earn points, but don't click on any more than once!",
+    message: "Click on a bird to earn points, but don't click the same bird twice!",
     score: 0,
     topScore: 0
   };
@@ -40,6 +40,7 @@ class App extends Component {
       if (clickedCards.length === this.state.cards.length) {
         message = "You WON! Click an image to restart!";
         clickedCards = [];
+        topScore = this.state.cards.length;
         console.log(message);
       } else {
         message = "Nice job, keep going!";
@@ -52,7 +53,7 @@ class App extends Component {
     console.log("TopScore: " + topScore)
 
     // Trigger state change
-    this.setState({cards, clickedCardIds: clickedCards, score: score, topScore: topScore, message: message});
+    this.setState({ cards, clickedCardIds: clickedCards, score: score, topScore: topScore, message: message });
   }
 
   // On App Render, shuffle the cards and display each one
@@ -65,14 +66,16 @@ class App extends Component {
           topscore={this.state.topScore}
           message={this.state.message}
         />
-        {this.state.cards.map(card => (
-          <Card
-            key={card.id}
-            id={card.id}
-            imageurl={card.imageurl}
-            clickHandler={this.cardClickHandler}
-          />
-        ))}
+        <div className="cardCanvas">
+          {this.state.cards.map(card => (
+            <Card
+              key={card.id}
+              id={card.id}
+              imageurl={card.imageurl}
+              clickHandler={this.cardClickHandler}
+            />
+          ))}
+        </div>
       </div>
     );
   }

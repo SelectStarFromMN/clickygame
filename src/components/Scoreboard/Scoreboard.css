@@ -1,0 +1,23 @@
+.gameScore {
+    padding: 1px;
+    background: url("sky.jpg") no-repeat;
+    background-size: 100%;
+    color: navy;
+}
+
+.gameScore .message {
+    color: red;
+}
+
+.score {
+    color: navy;
+  }
+
+.topscore {
+    color: navy;
+}
+
+.italicStyle {
+    font-style: italic;
+}
+
